@@ -485,7 +485,7 @@ cparser_input (cparser_t *parser, char ch, cparser_char_t ch_type)
         if (CPARSER_CHAR_REGULAR != ch_type) {
             return CPARSER_OK;
         }
-        if ('\n' == ch) {
+        if ('\n' == ch || '\r' == ch) {
             /* We have a complete input. Call the callback. */
             assert(parser->user_input_cb);
             parser->user_buf[parser->user_buf_count] = '\0';
@@ -530,7 +530,7 @@ cparser_input (cparser_t *parser, char ch, cparser_char_t ch_type)
                 if (CPARSER_ERR_NOT_EXIST == rc) {
                     return CPARSER_OK;
                 }
-            } else if ('\n' == ch) {
+            } else if ('\n' == ch || '\r' == ch) {
                 /* Put the rest of the line into parser FSM */
                 for (n = cparser_line_current(parser);
                      n < cparser_line_last(parser); n++) {
@@ -624,7 +624,7 @@ cparser_input (cparser_t *parser, char ch, cparser_char_t ch_type)
         /* Ask for context sensitve help */
         cparser_help(parser);
         return CPARSER_OK;
-    } else if ('\n' == ch) {
+    } else if ('\n' == ch || '\r' == ch) {
         rc = cparser_execute_cmd(parser);
         cparser_line_advance(parser);
         return rc;
@@ -765,7 +765,7 @@ cparser_load_cmd (cparser_t *parser, char *filename)
         rsize = fread(buf, 1, sizeof(buf), fp);
         for (n = 0; n < rsize; n++) {
             /* Examine the input characters to maintain indent level */
-            if ('\n' == buf[n]) {
+            if ('\n' == buf[n] || '\r' == buf[n]) {
                 cparser_result_t rc;
                 char buf[128];
 
