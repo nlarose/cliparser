@@ -411,6 +411,7 @@ cparser_complete_keyword (cparser_t *parser, const cparser_node_t *node,
     return CPARSER_OK;
 }
 
+#ifdef CPARSER_FILE_SUPPORT
 /*
  * cparser_complete_file - Token complete function for a file path.
  */
@@ -441,6 +442,7 @@ cparser_complete_file (cparser_t *parser, const cparser_node_t *node,
     /* hack alert - add support for multiple partial matches */
     return CPARSER_OK;
 }
+#endif
 
 /*
  * cparser_complete_list - Token complete function for a LIST token.

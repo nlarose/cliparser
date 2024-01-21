@@ -80,7 +80,11 @@ cparser_complete_fn cparser_complete_fn_tbl[CPARSER_MAX_NODE_TYPES] = {
     NULL,
     NULL,
     NULL,
+#ifdef CPARSER_FILE_SUPPORT
     cparser_complete_file,
+#else
+    NULL,
+#endif
     cparser_complete_list
 };
 
